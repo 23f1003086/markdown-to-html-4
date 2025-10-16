@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 800px;
+            background-color: #f9f9f9;
+        }
+        #markdown-output {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+            margin-top: 20px;
+            overflow: auto;
+        }
+        #loading {
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js/lib/highlight.js"></script>
+</head>
+<body>
+
+<h1>Markdown to HTML Converter</h1>
+<textarea id="markdown-input" rows="10" style="width: 100%;" placeholder="Paste your Markdown here..."></textarea>
+<button id="convert-btn">Convert</button>
+
+<div id="loading" style="display: none;">Processing...</div>
+<div id="markdown-output"></div>
+
+<script>
+    document.getElementById('convert-btn').addEventListener('click', function() {
+        const input = document.getElementById('markdown-input').value;
+        if (!input) {
+            alert('Please enter some Markdown text.');
+            return;
+        }
+
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('markdown-output').innerHTML = '';
+
+        try {
+            const html = marked(input);
+            document.getElementById('markdown-output').innerHTML = html;
+            hljs.highlightAll();
+        } catch (error) {
+            console.error('Error converting Markdown:', error);
+            document.getElementById('markdown-output').innerHTML = '<p>Error converting Markdown. Please check your input.</p>';
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
