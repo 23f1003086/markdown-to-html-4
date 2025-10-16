@@ -51,7 +51,7 @@
         document.getElementById('markdown-output').innerHTML = '';
 
         try {
-            const html = marked(input);
+            const html = marked.parse(input);
             document.getElementById('markdown-output').innerHTML = html;
             hljs.highlightAll();
         } catch (error) {
